@@ -157,19 +157,20 @@
             <h1 class="nerf_title_v2">Diffusion 3D Features (Diff3F)</h1>
             <div class="nerf_subheader_v2">Decorating Untextured Shapes with Distilled Semantic Features</div>
             <!-- <div class="nerf_subheader_v2" style="color: #ff7411;"><b>CVPR 2024</b></div> -->
-            <div class="nerf_subheader_v2"><b>[CVPR 2024]</b></div>
+            <!-- <div class="nerf_subheader_v2"><b>[CVPR 2024]</b></div> -->
         </div>
             <div class="nerf_subheader_v2">
                 <div>
                     <a href="https://niladridutt.com/" target="_blank" class="nerf_authors_v2">Niladri Shekhar Dutt<span
-                            class="text-span_nerf"></span></a><sup> 1</sup>,&nbsp;&nbsp;
+                            class="text-span_nerf"></span></a><sup> 1, 2</sup>,&nbsp;&nbsp;
                     <a href="https://sanjeevmk.github.io/" target="_blank" class="nerf_authors_v2">Sanjeev Muralikrishnan<span
                             class="text-span_nerf"></span></a><sup> 1</sup>,&nbsp;&nbsp;
                     <a href="http://www0.cs.ucl.ac.uk/staff/n.mitra/" target="_blank" class="nerf_authors_v2">Niloy J. Mitra<span
-                            class="text-span_nerf"></span></a><sup> 1, 2</sup>
+                            class="text-span_nerf"></span></a><sup> 1, 3</sup>
                 </div>
                 <div>
-                    <h1 class="nerf_affiliation_v2"><sup>1</sup> University College London</h1>,
+                    <h1 class="nerf_affiliation_v2"><sup>1</sup> University College London</h1>,&nbsp;&nbsp;
+                    <h1 class="nerf_affiliation_v2"><sup>2</sup> Ready Player Me </h1>,&nbsp;&nbsp;
                     <h1 class="nerf_affiliation_v2"><sup>2</sup> Adobe Research</h1>
                 </div>
 
@@ -180,8 +181,8 @@
                         <i class="fa fa-file-pdf"></i> Paper </a>
                     <a class="btn" href="https://github.com/niladridutt/Diffusion-3D-Features" role="button" target="_blank">
                         <i class="fa-brands fa-github"></i> Code </a>
-                    <!-- <a class="btn btn-large btn-light" href="https://youtu.be/0FazXENkQms" role="button" target="_blank" disabled>
-                        <i class="fa-brands fa-youtube"></i> Video </a> -->
+                    <a class="btn btn-large btn-light" href="https://youtu.be/zEwmGMRw7jo" role="button" target="_blank" disabled>
+                        <i class="fa-brands fa-youtube"></i> Video </a>
                 </div>
 
             </div>
@@ -293,7 +294,10 @@
         </div>
 
         <h2 class="grey-heading_nerf">How Does it Work?</h2>
-        <p>We aim to decorate 3D points of a given shape in any modality- point clouds or meshes, with rich semantic descriptors. Given the scarcity of 3D geometry data from which to learn these meaningful descriptors, we leverage foundational vision models trained on very large datasets to obtain these features. This enables Diff3F to produce semantic descriptors in a zero-shot way.</p>
+        <div class="image-container2">
+            <img src="assets/Diff3F Block.jpg">
+        </div>
+        <p>We decorate 3D points of a given shape in any modality- point clouds or meshes, with rich semantic descriptors. Given the scarcity of 3D geometry data from which to learn these meaningful descriptors, we leverage foundational vision models trained on very large datasets to obtain these features. This enables Diff3F to produce semantic descriptors in a zero-shot way.</p>
         <div class="image-container3">
             <img src="assets/gallery.jpg">
         </div>
@@ -439,34 +443,47 @@
 
     <div class="white_section_nerf w-container">
         <h2 class="grey-heading_nerf">Zero-Shot Part segmentation</h2>
-        <p> K-means clustering can be directly applied to our Diff3F features to extract part segments. Interestingly, we discover that the k-means 
+        <p> K-means clustering can be directly applied to our Diff3F descriptors to extract part segments. Interestingly, we discover that the k-means 
             centroids, extracted from one shape (e.g., human), can be used to segment another (e.g., cat), thanks to the semantic nature of our descriptors. This leads to
             corresponding part segmentation (arms of the human map to front legs of the cat, head maps to head, etc.) as seen in the figure below.</p>
-        <div class="grid-container-3">
-            <!-- First Image -->
+
+            <div class="image-container3">
+                <img src="assets/segment.jpg">
+            </div>
+
+            <h2 class="grey-heading_nerf">Regularizing Point-to-Point Maps</h2>
+            <p> Diff3F descriptors can be effortlessly plugged into existing geometry processing pipelines such as Functional Maps. We compare the effectiveness of vanilla functional maps [5] with the Wave Kernel Signature as descriptors [6] (top) vs our descriptors Diff3F (bottom). Ours being semantic enables Functional Maps to work with non-isometric deformations even though FMs typically struggle with such cases when using traditional geometric descriptors. 
+                Our descriptors yield accurate correspondence in most cases, thus eliminating the need for further refinement algorithms typically used in related works. </p>
+    
+                <div class="image-container3">
+                    <img src="assets/FM.jpg">
+                </div>
+
+        <!-- <div class="grid-container-3">
+            
             <div class="grid-item">
                 <p class="myprompt nerf_text">k=6</p>
                 <img src="assets/seg/human_seg_1.png">
             </div>
     
-            <!-- First Video -->
+           
             <div class="grid-item">
                 <p class="myprompt nerf_text">segmented using centroids of human</p>
                 <img src="assets/seg/cat_seg_2.png">
             </div>
     
-            <!-- Second Image -->
+            
             <div class="grid-item">
                 <p class="myprompt nerf_text">k=6</p>
                 <img src="assets/seg/elephant_seg_4.png">
             </div>
-            <!-- Second Video -->
+            
             <div class="grid-item">
                 <p class="myprompt nerf_text">k=3</p>
                 <img src="assets/seg/chair_seg_3.png">
             </div>
     
-            <!-- Third Image -->
+            
             <div class="grid-item">
                 <p class="myprompt nerf_text">k=3</p>
                 <img src="assets/seg/fish_seg_5.png">
@@ -476,12 +493,13 @@
                 <p class="myprompt nerf_text">segmented using centroids of dolphin</p>
                 <img src="assets/seg/bird_seg_6.png">
             </div>
-        </div>
-    </div>
+        </div>-->
+
+
+    </div> 
 
     <div class="white_section_nerf w-container">
         <h2 class="grey-heading_nerf">Comparison to Prior Works</h2>
-        <br>
         <!-- <div class="grid-container-2">
             <div class="grid-item" style="width: 200px;">
                 <img src="assets/compare.jpg">
@@ -496,19 +514,26 @@
             </div>
         </div> -->
 
-        <div class="image-container2">
-            <img src="assets/visual-comparison.jpg">
-        </div>
-        <div class="containerside" style="text-align: left;">
-        <p><b>Comparisons.</b> We compare our Diff3F (bottom) against SOTA methods (i.e., DPC and SE-ORNet) for the task of point-to-point shape correspondence. 
-            Corresponding points are similarly colored. We show results using point cloud rendering of our method for the human pair (left) and results with mesh rendering for the animal pair (right).
+            <div class="image-container3">
+                <img src="assets/animal-comp.jpg">
+            </div>
+            <br>
+
+            <div class="image-container2">
+                <img src="assets/man-comp.jpg">
+            </div>
+
+        <p>We compare our Diff3F against SOTA methods (i.e., DPC and SE-ORNet) for the task of point-to-point shape correspondence. 
+            Corresponding points are similarly colored. We show results with mesh rendering for the animal pair (top) and results using point cloud rendering of our method for the human pair (bottom).
             While DPC and SE-ORNet both get confused by the different alignments of the human pair resulting in a laterally flipped prediction, ours, being a multi-view rendering-based method, it is robust to rotation. 
         </p>
-        </div>
-        <div class="containerside" style="text-align: right;">
+        <!-- <div class="containerside" style="text-align: left;">
+        <p><b>Comparisons.</b>         </p>
+        </div> -->
+        <!-- <div class="containerside" style="text-align: right;">
             <p><b>Regularizing point-2-point maps.</b> We compare the effectiveness of vanilla functional maps [5] with the Wave Kernel Signature as descriptors [6] (top) vs our descriptors Diff3F (bottom). Ours being semantic enables Functional Maps to work with non-isometric deformations even though FMs typically struggle with such cases when using traditional geometric descriptors. 
                 Our descriptors yield accurate correspondence in most cases, thus eliminating the need for further refinement algorithms typically used in related works. </p>
-        </div>
+        </div> -->
     </div>
     <div class="wtable w-container">
         <h2 class="grey-heading_nerf">Evaluation Comparison</h2>
